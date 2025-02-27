@@ -8,6 +8,14 @@ using namespace std;
 
 string read_file_contents(const string& filename);
 
+bool match(const string& input, size_t& index, char expected) {
+    if (index + 1 < input.length() && input[index + 1] == expected) {
+        index++;
+        return true;
+    }
+    return false;
+}
+
 int main(int argc, char *argv[]) {
     cout << unitbuf;
     cerr << unitbuf;    
@@ -24,7 +32,9 @@ int main(int argc, char *argv[]) {
         int line = 1;
         bool has_error = false;
 
-        for (char c : file_contents) {
+        for (size_t i = 0; i < file_contents.length(); i++) {
+            char c = file_contents[i];
+
             switch (c) {
                 case '(':
                     cout << "LEFT_PAREN ( null" << endl; break;
@@ -46,6 +56,18 @@ int main(int argc, char *argv[]) {
                     cout << "SEMICOLON ; null" << endl; break;
                 case '*':
                     cout << "STAR * null" << endl; break;
+                case '!':
+                    cout << (match(file_contents, i, '=') ? "BANG_EQUAL != null" : "BANG ! null") << endl;
+                    break;
+                case '=':
+                    cout << (match(file_contents, i, '=') ? "EQUAL_EQUAL == null" : "EQUAL = null") << endl;
+                    break;
+                case '<':
+                    cout << (match(file_contents, i, '=') ? "LESS_EQUAL <= null" : "LESS < null") << endl;
+                    break;
+                case '>':
+                    cout << (match(file_contents, i, '=') ? "GREATER_EQUAL >= null" : "GREATER > null") << endl;
+                    break;
                 case '\n':
                     line++;
                     break;
