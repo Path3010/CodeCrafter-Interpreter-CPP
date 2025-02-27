@@ -68,6 +68,22 @@ int main(int argc, char *argv[]) {
                 case '>':
                     cout << (match(file_contents, i, '=') ? "GREATER_EQUAL >= null" : "GREATER > null") << endl;
                     break;
+                case '/':
+                    if (match(file_contents, i, '/')) {  
+                        while (i + 1 < file_contents.length() && file_contents[i + 1] != '\n') i++;
+                    } else if (match(file_contents, i, '*')) {  
+                        while (i + 1 < file_contents.length()) {
+                            if (file_contents[i] == '*' && i + 1 < file_contents.length() && file_contents[i + 1] == '/') {
+                                i++;
+                                break;
+                            }
+                            if (file_contents[i] == '\n') line++;
+                            i++;
+                        }
+                    } else {  
+                        cout << "SLASH / null" << endl;
+                    }
+                    break;
                 case '\n':
                     line++;
                     break;
