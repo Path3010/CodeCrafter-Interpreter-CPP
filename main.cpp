@@ -84,6 +84,9 @@ int main(int argc, char *argv[]) {
                         cout << "SLASH / null" << endl;
                     }
                     break;
+                case ' ':
+                case '\t':
+                    break;
                 case '\n':
                     line++;
                     break;
